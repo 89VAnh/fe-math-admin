@@ -1,17 +1,19 @@
-import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider";
-import theme from "@/config/theme";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ProConfigProvider } from "@ant-design/pro-components";
-import { ConfigProvider } from "antd";
-import viVN from "antd/locale/vi_VN";
+"use client";
 import React from "react";
+import { SWRConfig } from "swr";
 
-export default function Provider({ children }: React.PropsWithChildren) {
-  return (
-    <AntdRegistry>
-      <ConfigProvider locale={viVN} theme={theme}>
-        <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
-      </ConfigProvider>
-    </AntdRegistry>
-  );
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const swrConfig = {
+  revalidateOnFocus: false,
+  shouldRetryOnError: false,
+  fetcher,
+};
+
+export default function Provider({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return <SWRConfig value={swrConfig}>{children}</SWRConfig>;
 }
