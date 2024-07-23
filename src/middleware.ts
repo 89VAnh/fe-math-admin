@@ -4,7 +4,6 @@ import { authorization } from "./utils/service/account.service";
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("session_token")?.value;
 
-  console.log(token);
   if (!token && !request.nextUrl.pathname.startsWith("/login")) {
     return Response.redirect(new URL("/login", request.url));
   }
