@@ -1,10 +1,19 @@
+import { getUser, logout } from "@/lib/action";
+import { Account } from "@/types/Account";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClickOutside from "../ClickOutside";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [user, setUser] = useState<Account>({} as Account);
+
+  useEffect(() => {
+    getUser().then((user) => {
+      setUser(user);
+    });
+  }, []);
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className='relative'>
@@ -16,7 +25,7 @@ const DropdownUser = () => {
           <Image
             width={112}
             height={112}
-            src='/images/user/user-03.png'
+            src={user.avatar}
             style={{
               width: "auto",
               height: "auto",
@@ -27,7 +36,7 @@ const DropdownUser = () => {
         </span>
 
         <span className='flex items-center gap-2 font-medium text-dark dark:text-dark-6'>
-          <span className='hidden lg:block'>Nguyễn Minh Hiếu</span>
+          <span className='hidden lg:block'>{user.name}</span>
 
           <svg
             className={`fill-current duration-200 ease-in ${
@@ -49,7 +58,7 @@ const DropdownUser = () => {
       </Link>
 
       {/* <!-- Dropdown Star --> */}
-      {/* {dropdownOpen && (
+      {dropdownOpen && (
         <div
           className={`absolute right-0 mt-7.5 flex w-[280px] flex-col rounded-lg border-[0.5px] border-stroke bg-white shadow-default dark:border-dark-3 dark:bg-gray-dark`}>
           <div className='flex items-center gap-2.5 px-5 pb-5.5 pt-3.5'>
@@ -57,7 +66,7 @@ const DropdownUser = () => {
               <Image
                 width={112}
                 height={112}
-                src='/images/user/user-03.png'
+                src={user.avatar}
                 style={{
                   width: "auto",
                   height: "auto",
@@ -71,10 +80,10 @@ const DropdownUser = () => {
 
             <span className='block'>
               <span className='block font-medium text-dark dark:text-white'>
-                Jhon Smith
+                {user.name}
               </span>
               <span className='block font-medium text-dark-5 dark:text-dark-6'>
-                jonson@nextadmin.com
+                {user.email}
               </span>
             </span>
           </div>
@@ -136,7 +145,9 @@ const DropdownUser = () => {
             </li>
           </ul>
           <div className='p-2.5'>
-            <button className='flex w-full items-center gap-2.5 rounded-[7px] p-2.5 text-sm font-medium text-dark-4 duration-300 ease-in-out hover:bg-gray-2 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white lg:text-base'>
+            <button
+              className='flex w-full items-center gap-2.5 rounded-[7px] p-2.5 text-sm font-medium text-dark-4 duration-300 ease-in-out hover:bg-gray-2 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white lg:text-base'
+              onClick={() => logout()}>
               <svg
                 className='fill-current'
                 width='18'
@@ -164,7 +175,7 @@ const DropdownUser = () => {
             </button>
           </div>
         </div>
-      )} */}
+      )}
       {/* <!-- Dropdown End --> */}
     </ClickOutside>
   );

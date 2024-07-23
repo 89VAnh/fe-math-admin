@@ -13,8 +13,8 @@ export const loginService = async (data: Props): Promise<any> => {
   return res.data;
 };
 
-export const authorization = async (): Promise<any> => {
-  const res = await apiClient?.get(`${prefix}/me`);
+export const authorization = async (token: string): Promise<any> => {
+  const res = await apiClient?.get(`${prefix}/me`, { params: { token } });
 
   return res.data;
 };

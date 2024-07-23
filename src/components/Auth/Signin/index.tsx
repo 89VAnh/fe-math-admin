@@ -1,32 +1,19 @@
 "use client";
 import { authenticate } from "@/lib/action";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useState } from "react";
 
 export default function SignIn() {
-  const [errorMessage, dispatch, isPending] = useFormState(
-    authenticate,
-    undefined
-  );
-  const { push } = useRouter();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleClick = (event: any) => {
-    if (isPending) {
-      event.preventDefault();
-    }
-
-    push("/");
+  const hadleLogin = (formData: FormData) => {
+    authenticate(formData).catch((err) => {
+      setErrorMessage("Tên tài khoản hoặc mật khẩu không chính xác");
+    });
   };
-  useEffect(() => {
-    if (errorMessage) {
-      alert(errorMessage);
-    }
-  }, [errorMessage]);
 
   return (
-    <form action={dispatch}>
+    <form action={hadleLogin}>
       <div className='mb-4'>
         <label
           htmlFor='username'
@@ -101,6 +88,10 @@ export default function SignIn() {
         </div>
       </div>
 
+      <div>
+        <p className='text-red-600'>{errorMessage}</p>
+      </div>
+
       <div className='mb-6 flex items-center justify-between gap-2 py-2'>
         <label
           htmlFor='remember'
@@ -139,8 +130,6 @@ export default function SignIn() {
 
       <div className='mb-4.5'>
         <button
-          aria-disabled={isPending}
-          onClick={handleClick}
           type='submit'
           className='flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary p-4 font-medium text-white transition hover:bg-opacity-90'>
           Đăng nhập
