@@ -1,4 +1,4 @@
-import { getUser, logout } from "@/lib/action";
+import { getUser, logout } from "@/lib/account.action";
 import { Account } from "@/types/Account";
 import Image from "next/image";
 import Link from "next/link";

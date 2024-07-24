@@ -6,4 +6,5 @@ export type Account = {
   phone: string;
   avatar: string;
   role: number;
+  token?: string;
 };

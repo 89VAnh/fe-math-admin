@@ -1,15 +1,29 @@
 "use client";
-import { authenticate } from "@/lib/action";
+import { loginFetcher } from "@/helper/fetcher/account.fetcher";
+import { login } from "@/lib/account.action";
 import Link from "next/link";
 import { useState } from "react";
+import useSWR from "swr";
 
 export default function SignIn() {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [account, setAccount] = useState<{
+    username: string;
+    password: string;
+  } | null>(null);
+
+  const { error } = useSWR(account, loginFetcher, {
+    onSuccess: (data) => {
+      if (data) login(data);
+    },
+  });
 
   const hadleLogin = (formData: FormData) => {
-    authenticate(formData).catch((err) => {
-      setErrorMessage("Tên tài khoản hoặc mật khẩu không chính xác");
-    });
+    const payload = {
+      username: formData.get("username")?.toString() || "",
+      password: formData.get("password")?.toString() || "",
+    };
+
+    setAccount(payload);
   };
 
   return (
@@ -89,7 +103,7 @@ export default function SignIn() {
       </div>
 
       <div>
-        <p className='text-red-600'>{errorMessage}</p>
+        <p className='text-red-600'>{error?.response?.data?.message}</p>
       </div>
 
       <div className='mb-6 flex items-center justify-between gap-2 py-2'>

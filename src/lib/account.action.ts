@@ -1,28 +1,14 @@
 "use server";
 
-import { apiClient } from "@/helper/api";
 import { Account } from "@/types/Account";
-import { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function authenticate(formData: FormData) {
+export async function login(account: Account) {
   const cookieStore = cookies();
 
-  const payload = {
-    username: formData.get("username")?.toString() || "",
-    password: formData.get("password")?.toString() || "",
-  };
-
-  const account = await apiClient
-    .post("/account/login", payload)
-    .then((res) => res.data.account)
-    .catch(() => {
-      throw new Error("Tên tài khoản hoặc mật khẩu không chính xác");
-    });
-
   cookieStore.set("user", JSON.stringify(account));
-  cookieStore.set("session_token", account.token);
+  cookieStore.set("session_token", account?.token || "");
 
   redirect("/");
 }
