@@ -31,7 +31,15 @@ export default function UpdateModal<T>({
   formItems: any[];
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [data, setData] = useState({});
+  const [data, setData] = useState(() => {
+    const data: any = {};
+    for (const formItem of formItems) {
+      if (formItem.type === "latex") {
+        data[formItem.key] = item[formItem.key as keyof T] as string;
+      }
+    }
+    return data;
+  });
   const { trigger, isMutating } = useUpdate();
   const [transferData, setTransferData] = useState<number[]>(
     (item as Test).questions
@@ -123,7 +131,7 @@ export default function UpdateModal<T>({
           <Editor
             initialData={item[formItem.key as keyof T] as string}
             setValue={(value: string) =>
-              setData((prev) => ({
+              setData((prev: any) => ({
                 ...prev,
                 [formItem.key]: value,
               }))
