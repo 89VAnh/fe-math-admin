@@ -45,6 +45,7 @@ import {
 import "ckeditor5/ckeditor5.css";
 import { useRef, useState } from "react";
 import MathLive from "./plugins/MathLive";
+import { uploadPlugin } from "./plugins/Upload";
 
 type EditorRef = {
   editor?: ClassicEditor;
@@ -145,6 +146,7 @@ function Editor({
           mathLive: {
             handleMathLive: onOpen,
           },
+          extraPlugins: [uploadPlugin],
         }}
         onChange={(event, editor) => {
           setValue(editor.getData() as string);

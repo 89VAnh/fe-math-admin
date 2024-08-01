@@ -11,3 +11,9 @@ export const uploadFile = async (data: any): Promise<any> => {
 
   return result.data;
 };
+
+export const deleteFile = async (data: { filePath: string }): Promise<any> => {
+  const result = await apiClient.post(`${prefix}/delete-file`, data);
+
+  return result.data;
+};
