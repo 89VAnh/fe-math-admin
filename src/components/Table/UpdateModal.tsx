@@ -52,7 +52,7 @@ export default function UpdateModal<T>({
       payload.image = dataFile?.path;
     }
 
-    trigger().then(() => {
+    trigger(payload).then(() => {
       searchMutate();
       onClose();
     });
@@ -83,6 +83,9 @@ export default function UpdateModal<T>({
             labelPlacement='outside'
             isRequired
             required
+            defaultSelectedKeys={[
+              (item[formItem.key as keyof T] as string).toString(),
+            ]}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setLevelId(Number(e.target.value));
             }}>
