@@ -48,11 +48,13 @@ const columns = [
 const Transfer = ({
   transferData = [],
   setTransferData,
+  levelId,
 }: {
   transferData?: number[];
   setTransferData: Dispatch<SetStateAction<number[]>>;
+  levelId?: number;
 }) => {
-  const { data } = useSearchQuestion({});
+  const { data } = useSearchQuestion({ levelId });
 
   const [leftItems, setLeftItems] = useState<Question[]>([]);
   const [rightItems, setRightItems] = useState<Question[]>([]);

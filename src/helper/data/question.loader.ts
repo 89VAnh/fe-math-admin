@@ -7,7 +7,6 @@ const prefix = "question";
 export function useSearchQuestion(params: any) {
   params = { ...params, content: params.searchContent };
   delete params.searchContent;
-
   const { data, isLoading, error, mutate } = useSWR(
     [prefix, params],
     getFetcher

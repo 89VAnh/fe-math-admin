@@ -1,11 +1,13 @@
 "use client";
 import Table from "@/components/Table";
+import { useSearchLevel } from "@/helper/data/level.loader";
 import {
   useCreateQuestion,
   useDeleteQuestion,
   useSearchQuestion,
   useUpdateQuestion,
 } from "@/helper/data/question.loader";
+import { Level } from "@/types/Level";
 import { Question } from "@/types/Question";
 import { Chip } from "@nextui-org/react";
 import Latex from "react-latex-next";
@@ -102,64 +104,81 @@ const columns = [
       <Chip color='success'>{children}</Chip>
     ),
   },
-];
-export const formItems = [
   {
-    key: "id",
-    type: "string",
-    isPrimary: true,
-  },
-  {
-    key: "content",
-    type: "latex",
-    label: "Nội dung câu hỏi",
-    render: (children: React.ReactNode) => (
-      <Latex>${children as string}$</Latex>
-    ),
-  },
-  {
-    key: "answerA",
-    type: "latex",
-    label: "Đáp án A",
-    render: (children: React.ReactNode) => (
-      <Latex>${children as string}$</Latex>
-    ),
-  },
-  {
-    key: "answerB",
-    type: "latex",
-    label: "Đáp án B",
-    render: (children: React.ReactNode) => (
-      <Latex>${children as string}$</Latex>
-    ),
-  },
-  {
-    key: "answerC",
-    type: "latex",
-    label: "Đáp án C",
-    render: (children: React.ReactNode) => (
-      <Latex>${children as string}$</Latex>
-    ),
-  },
-  {
-    key: "answerD",
-    type: "latex",
-    label: "Đáp án D",
-  },
-  {
-    key: "correctAnswer",
-    type: "string",
-    label: "Đáp án đúng",
-    options: [
-      { label: "Đáp án A", value: "A" },
-      { label: "Đáp án B", value: "B" },
-      { label: "Đáp án C", value: "C" },
-      { label: "Đáp án D", value: "D" },
-    ],
+    key: "level",
+    label: "Cấp bậc",
   },
 ];
 
 const QuestionTable = () => {
+  const { data } = useSearchLevel({});
+
+  const formItems = [
+    {
+      key: "id",
+      type: "string",
+      isPrimary: true,
+    },
+    {
+      key: "content",
+      type: "latex",
+      label: "Nội dung câu hỏi",
+      render: (children: React.ReactNode) => (
+        <Latex>${children as string}$</Latex>
+      ),
+    },
+    {
+      key: "answerA",
+      type: "latex",
+      label: "Đáp án A",
+      render: (children: React.ReactNode) => (
+        <Latex>${children as string}$</Latex>
+      ),
+    },
+    {
+      key: "answerB",
+      type: "latex",
+      label: "Đáp án B",
+      render: (children: React.ReactNode) => (
+        <Latex>${children as string}$</Latex>
+      ),
+    },
+    {
+      key: "answerC",
+      type: "latex",
+      label: "Đáp án C",
+      render: (children: React.ReactNode) => (
+        <Latex>${children as string}$</Latex>
+      ),
+    },
+    {
+      key: "answerD",
+      type: "latex",
+      label: "Đáp án D",
+    },
+    [
+      {
+        key: "correctAnswer",
+        type: "string",
+        label: "Đáp án đúng",
+        options: [
+          { label: "Đáp án A", value: "A" },
+          { label: "Đáp án B", value: "B" },
+          { label: "Đáp án C", value: "C" },
+          { label: "Đáp án D", value: "D" },
+        ],
+      },
+      {
+        key: "levelId",
+        label: "Cấp bậc",
+        options: data?.data.map((x: Level) => ({
+          label: x.name,
+          value: x.id,
+        })),
+      },
+    ],
+  ];
+
   return (
     <div className='rounded-[10px] border border-stroke bg-white p-4 shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card sm:p-7.5'>
       <Table<Question>

@@ -31,13 +31,16 @@ export default function CreateModal<T>({
   const [data, setData] = useState({});
   const { trigger, isMutating } = useCreate();
   const [transferData, setTransferData] = useState<number[]>([]);
+  const [levelId, setLevelId] = useState<number>();
 
   const handleCreate = async (formData: FormData, onClose: any) => {
     const payload: any = {
       ...Object.fromEntries(formData),
       ...data,
-      questions: transferData,
     };
+    if (transferData) {
+      payload.questions = transferData;
+    }
     if (formData.has("image")) {
       const file = formData.get("image") as File;
       const dataFile = await uploadFile({ file });
@@ -52,21 +55,45 @@ export default function CreateModal<T>({
   const renderFormItem = (formItem: any): React.ReactNode => {
     if (formItem?.isPrimary && formItem?.hidden !== false)
       return <div key={formItem.key}></div>;
+
     if (formItem?.options)
-      return (
-        <Select
-          label={formItem?.label}
-          placeholder={formItem?.label}
-          name={formItem.key}
-          key={formItem.key}
-          labelPlacement='outside'
-          isRequired
-          required>
-          {formItem?.options.map((option: { label: string; value: string }) => (
-            <SelectItem key={option.value}>{option.label}</SelectItem>
-          ))}
-        </Select>
-      );
+      if (formItem.key === "levelId")
+        return (
+          <Select
+            label={formItem?.label}
+            placeholder={formItem?.label}
+            name={formItem.key}
+            key={formItem.key}
+            labelPlacement='outside'
+            isRequired
+            required
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setLevelId(Number(e.target.value));
+            }}>
+            {formItem?.options.map(
+              (option: { label: string; value: string }) => (
+                <SelectItem key={option.value}>{option.label}</SelectItem>
+              )
+            )}
+          </Select>
+        );
+      else
+        return (
+          <Select
+            label={formItem?.label}
+            placeholder={formItem?.label}
+            name={formItem.key}
+            key={formItem.key}
+            labelPlacement='outside'
+            isRequired
+            required>
+            {formItem?.options.map(
+              (option: { label: string; value: string }) => (
+                <SelectItem key={option.value}>{option.label}</SelectItem>
+              )
+            )}
+          </Select>
+        );
     if (formItem.type === "latex")
       return (
         <>
@@ -85,7 +112,7 @@ export default function CreateModal<T>({
       return (
         <>
           <h3>{formItem?.label} :</h3>
-          <Transfer setTransferData={setTransferData} />
+          <Transfer setTransferData={setTransferData} levelId={levelId} />
         </>
       );
     if (formItem.type === "image")

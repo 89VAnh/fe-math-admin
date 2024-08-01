@@ -1,10 +1,9 @@
 import { EyeIcon, PlusIcon } from "@/assets";
+import { uploadFile } from "@/lib/uploade.action";
 import { Test } from "@/types/Test";
 import {
   Button,
-  Checkbox,
   Input,
-  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -37,13 +36,23 @@ export default function UpdateModal<T>({
   const [transferData, setTransferData] = useState<number[]>(
     (item as Test).questions
   );
+  const [levelId, setLevelId] = useState<number>();
 
-  const handleUpdate = (formData: FormData, onClose: any) => {
-    trigger({
+  const handleUpdate = async (formData: FormData, onClose: any) => {
+    const payload: any = {
       ...Object.fromEntries(formData),
       ...data,
-      questions: transferData,
-    }).then(() => {
+    };
+    if (transferData) {
+      payload.questions = transferData;
+    }
+    if (formData.has("image")) {
+      const file = formData.get("image") as File;
+      const dataFile = await uploadFile({ file });
+      payload.image = dataFile?.path;
+    }
+
+    trigger().then(() => {
       searchMutate();
       onClose();
     });
@@ -64,25 +73,46 @@ export default function UpdateModal<T>({
         />
       );
     if (formItem?.options)
-      return (
-        <Select
-          label={formItem?.label}
-          placeholder={formItem?.label}
-          name={formItem.key}
-          key={formItem.key}
-          labelPlacement='outside'
-          defaultSelectedKeys={[
-            (item[formItem.key as keyof T] as string).toString(),
-          ]}
-          isRequired
-          required>
-          {formItem?.options.map(
-            (option: { label: string | number; value: string | number }) => (
-              <SelectItem key={option.value}>{option.label}</SelectItem>
-            )
-          )}
-        </Select>
-      );
+      if (formItem.key === "levelId")
+        return (
+          <Select
+            label={formItem?.label}
+            placeholder={formItem?.label}
+            name={formItem.key}
+            key={formItem.key}
+            labelPlacement='outside'
+            isRequired
+            required
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setLevelId(Number(e.target.value));
+            }}>
+            {formItem?.options.map(
+              (option: { label: string; value: string }) => (
+                <SelectItem key={option.value}>{option.label}</SelectItem>
+              )
+            )}
+          </Select>
+        );
+      else
+        return (
+          <Select
+            label={formItem?.label}
+            placeholder={formItem?.label}
+            name={formItem.key}
+            key={formItem.key}
+            labelPlacement='outside'
+            defaultSelectedKeys={[
+              (item[formItem.key as keyof T] as string).toString(),
+            ]}
+            isRequired
+            required>
+            {formItem?.options.map(
+              (option: { label: string | number; value: string | number }) => (
+                <SelectItem key={option.value}>{option.label}</SelectItem>
+              )
+            )}
+          </Select>
+        );
     if (formItem.type === "latex")
       return (
         <>
@@ -105,9 +135,24 @@ export default function UpdateModal<T>({
           <Transfer
             transferData={transferData}
             setTransferData={setTransferData}
+            levelId={levelId}
           />
         </>
       );
+    if (formItem.type === "image")
+      return (
+        <Input
+          label={formItem?.label}
+          name={formItem.key}
+          key={formItem.key}
+          isRequired
+          required
+          labelPlacement='outside'
+          type='file'
+          accept='image/*'
+        />
+      );
+
     return (
       <Input
         label={formItem?.label}

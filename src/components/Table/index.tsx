@@ -54,6 +54,8 @@ export default function Table<T>({
     searchContent,
   });
 
+  const [levelId, setLevelId] = useState<number>();
+
   const pages = useMemo(
     () => (data?.total ? Math.ceil((data?.total || 0) / PAGE_SIZE) : 0),
     [data?.total, PAGE_SIZE]
