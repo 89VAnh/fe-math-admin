@@ -1,17 +1,20 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { authorization } from "./utils/service/account.service";
+import { apiClient } from "./helper/api";
+import { SESSION_TOKEN } from "./utils/config";
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get("session_token")?.value;
+  const token = request.cookies.get(SESSION_TOKEN)?.value;
 
   if (!token && !request.nextUrl.pathname.startsWith("/login")) {
     return Response.redirect(new URL("/login", request.url));
   }
 
   try {
-    authorization(token || "").catch((err) => {
-      throw err;
-    });
+    apiClient
+      .get(`account/me`, { params: { token: token || "" } })
+      .catch((err) => {
+        throw err;
+      });
 
     if (token && request.nextUrl.pathname.startsWith("/login")) {
       return Response.redirect(new URL("/", request.url));

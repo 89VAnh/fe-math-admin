@@ -1,11 +1,11 @@
 "use client";
 import Table from "@/components/Table";
-import { searchAccountFetcher } from "@/helper/fetcher/account.fetcher";
-import { Account, SearchAccount } from "@/types/Account";
+import {
+  useDeleteAccount,
+  useSearchAccount,
+} from "@/helper/data/account.loader";
+import { Account } from "@/types/Account";
 import { Chip, ChipProps, Image } from "@nextui-org/react";
-import AccountModal from "./AccountModal";
-import DeleteModal from "./DeleteModal";
-import SearchTable from "./SearchTable";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   1: "warning",
@@ -13,6 +13,10 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 };
 
 const columns = [
+  {
+    key: "index",
+    label: "STT",
+  },
   {
     key: "avatar",
     label: "Avatar",
@@ -59,33 +63,18 @@ const columns = [
       );
     },
   },
-  {
-    key: "action",
-    label: "Tác vụ",
-    render: ({ item }: { item: Account }) => (
-      <div className='flex items-center space-x-3.5'>
-        <AccountModal username={item.username} />
-        <DeleteModal username={item.username} />
-      </div>
-    ),
-  },
 ];
 
 const AccountTable = () => {
   return (
     <div className='rounded-[10px] border border-stroke bg-white p-4 shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card sm:p-7.5'>
-      <div className='max-w-full overflow-x-auto'>
-        <div className='mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
-          <SearchTable />
-
-          <AccountModal />
-        </div>
-        <Table<Account>
-          columns={columns}
-          rowKey='username'
-          searchFetcher={searchAccountFetcher}
-        />
-      </div>
+      <Table<Account>
+        columns={columns}
+        title={"người dùng"}
+        rowKey='username'
+        useSearch={useSearchAccount}
+        useDelete={useDeleteAccount}
+      />
     </div>
   );
 };

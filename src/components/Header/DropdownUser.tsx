@@ -12,7 +12,6 @@ const DropdownUser = () => {
 
   useEffect(() => {
     getUser().then((user) => {
-      console.log(user);
       setUser(user);
     });
   }, []);

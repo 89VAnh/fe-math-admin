@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^8.0.0",
     "@nextui-org/react": "^2.4.6",
     "axios": "^1.7.2",
+    "ckeditor5": "^42.0.2",
     "framer-motion": "^11.3.13",
+    "katex": "^0.16.11",
+    "mathlive": "^0.101.0",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-latex-next": "^3.0.0",
     "swr": "^2.2.5"
   },
   "devDependencies": {

@@ -1,3 +1,5 @@
+import ChevronLeftIcon from "./chevron-left.svg";
+import ChevronRightIcon from "./chevron-right.svg";
 import DeleteIcon from "./delete.svg";
 import DownArrowIcon from "./down-arrow.svg";
 import EyeIcon from "./eye.svg";
@@ -12,6 +14,8 @@ import SunIcon from "./sun.svg";
 import UserIcon from "./user.svg";
 
 export {
+  ChevronLeftIcon,
+  ChevronRightIcon,
   DeleteIcon,
   DownArrowIcon,
   EyeIcon,
@@ -23,6 +27,5 @@ export {
   SearchIcon,
   SettingIcon,
   SunIcon,
-  UserIcon
+  UserIcon,
 };
-

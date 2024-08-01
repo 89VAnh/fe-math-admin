@@ -3,13 +3,11 @@ import React, { useState } from "react";
 
 const SearchTable = ({
   placeholder = "Tìm kiếm",
+  handleSearch,
 }: {
   placeholder?: string;
+  handleSearch: (formData: FormData) => void;
 }) => {
-  const handleSearch = (formData: FormData) => {
-    console.log(formData.get("search")?.toString());
-  };
-
   return (
     <>
       <form action={handleSearch}>

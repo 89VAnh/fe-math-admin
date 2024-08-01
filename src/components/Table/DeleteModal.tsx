@@ -1,5 +1,4 @@
 import { DeleteIcon } from "@/assets";
-import { delLoginFetcher } from "@/helper/fetcher/account.fetcher";
 import {
   Button,
   Modal,
@@ -9,18 +8,21 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import React, { useState } from "react";
-import useSWR from "swr";
 
-export default function DeleteModal({ username }: { username: string }) {
+export default function DeleteModal({
+  id,
+  title,
+  useDelete,
+  searchMutate,
+}: {
+  id: string | number;
+  title: string;
+  useDelete: any;
+  searchMutate: any;
+}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [isUpdate, setIsUpdate] = useState(false);
 
-  const { isLoading } = useSWR(isUpdate ? username : null, delLoginFetcher, {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  const { trigger, isMutating } = useDelete();
 
   return (
     <>
@@ -37,19 +39,18 @@ export default function DeleteModal({ username }: { username: string }) {
           {(onClose) => (
             <>
               <ModalHeader className='flex flex-col gap-1'>
-                Xác nhận xoá dữ liệu
+                Xác nhận xoá {title}
               </ModalHeader>
-              <ModalBody>Bạn có chắc chắn muốn xoá tài khoản này?</ModalBody>
+              <ModalBody>Bạn có chắc chắn muốn xoá {title} này?</ModalBody>
               <ModalFooter>
                 <Button color='danger' variant='flat' onPress={onClose}>
                   Huỷ
                 </Button>
                 <Button
                   color='primary'
-                  isLoading={isLoading}
+                  isLoading={isMutating}
                   onPress={() => {
-                    setIsUpdate(true);
-                    console.log(123);
+                    trigger(id).then(() => searchMutate());
                     onClose();
                   }}>
                   Xác nhận

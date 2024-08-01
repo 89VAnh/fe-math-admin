@@ -1,35 +1,26 @@
 "use client";
 import { PasswordIcon, UserIcon } from "@/assets";
-import { loginFetcher } from "@/helper/fetcher/account.fetcher";
+import { useLogin } from "@/helper/data/account.loader";
 import { login } from "@/lib/account.action";
-import { Checkbox } from "@nextui-org/react";
+import { Button, Checkbox } from "@nextui-org/react";
 import Link from "next/link";
-import { useState } from "react";
-import useSWR from "swr";
 
 export default function SignIn() {
-  const [account, setAccount] = useState<{
-    username: string;
-    password: string;
-  } | null>(null);
+  const { trigger, error, isMutating } = useLogin();
 
-  const { error } = useSWR(account, loginFetcher, {
-    onSuccess: (data) => {
-      if (data) login(data);
-    },
-  });
-
-  const hadleLogin = (formData: FormData) => {
+  const handleLogin = (formData: FormData) => {
     const payload = {
       username: formData.get("username")?.toString() || "",
       password: formData.get("password")?.toString() || "",
     };
 
-    setAccount(payload);
+    trigger(payload).then((data) => {
+      login(data);
+    });
   };
 
   return (
-    <form action={hadleLogin}>
+    <form action={handleLogin}>
       <div className='mb-4'>
         <label
           htmlFor='username'
@@ -86,11 +77,12 @@ export default function SignIn() {
       </div>
 
       <div className='mb-4.5'>
-        <button
+        <Button
           type='submit'
-          className='flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary p-4 font-medium text-white transition hover:bg-opacity-90'>
+          isLoading={isMutating}
+          className='flex w-full rounded-lg bg-primary p-4 font-medium text-white'>
           Đăng nhập
-        </button>
+        </Button>
       </div>
     </form>
   );
