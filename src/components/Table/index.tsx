@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import "katex/dist/katex.min.css";
-import React, { Key, useCallback, useEffect, useMemo, useState } from "react";
+import React, { Key, useCallback, useMemo, useState } from "react";
 import CreateModal from "./CreateModal";
 import DeleteModal from "./DeleteModal";
 import SearchTable from "./SearchTable";

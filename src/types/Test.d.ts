@@ -1,5 +1,3 @@
-import { Question } from "./Question";
-
 export type Test = {
   id: string;
   title: string;
