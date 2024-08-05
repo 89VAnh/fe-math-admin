@@ -31,7 +31,7 @@ const columns = [
     render: ({ children }: { children: any }) =>
       children ? (
         <Image
-          src={BASE_URL + "/" + children?.toString()}
+          src={children?.toString()}
           alt='image'
           width={160}
           height={100}

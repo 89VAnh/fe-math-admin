@@ -42,7 +42,7 @@ function uploadAdapter(loader: FileLoader): UploadAdapter {
           const file = await loader.file;
           const response = await uploadFile({ file });
           resolve({
-            default: `${BASE_URL}/${response?.path}`,
+            default: response?.path,
           });
         } catch (error) {
           reject("Hello");

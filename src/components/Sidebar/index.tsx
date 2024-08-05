@@ -1,10 +1,25 @@
 "use client";
 
-import { MenuIcon, UserIcon } from "@/assets";
+import {
+  DashboardIcon,
+  HistoryIcon,
+  LevelIcon,
+  MenuIcon,
+  QuestionIcon,
+  TestIcon,
+  UserIcon,
+} from "@/assets";
 import ClickOutside from "@/components/ClickOutside";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { ACCOUNT_URL, LEVEL_URL, QUESTION_URL, TEST_URL } from "@/routes";
+import {
+  ACCOUNT_URL,
+  DASHBOARD_URL,
+  HISTORY_URL,
+  LEVEL_URL,
+  QUESTION_URL,
+  TEST_URL,
+} from "@/routes";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,34 +35,34 @@ const menuGroups = [
     name: "MAIN MENU",
     menuItems: [
       {
+        icon: <DashboardIcon />,
+        label: "Dashboard",
+        route: DASHBOARD_URL,
+      },
+      {
         icon: <UserIcon />,
         label: "Quản lý người dùng",
         route: ACCOUNT_URL,
       },
       {
-        icon: <UserIcon />,
+        icon: <QuestionIcon />,
         label: "Quản lý câu hỏi",
         route: QUESTION_URL,
       },
       {
-        icon: <UserIcon />,
+        icon: <TestIcon />,
         label: "Quản lý đề trắc nghiệm",
         route: TEST_URL,
       },
       {
-        icon: <UserIcon />,
+        icon: <LevelIcon />,
         label: "Quản lý cấp bậc (Lớp)",
         route: LEVEL_URL,
       },
       {
-        icon: <UserIcon />,
+        icon: <HistoryIcon />,
         label: "Lịch sử, kết quả",
-        route: "/user",
-      },
-      {
-        icon: <UserIcon />,
-        label: "Thống kê",
-        route: "/user",
+        route: HISTORY_URL,
       },
     ],
   },

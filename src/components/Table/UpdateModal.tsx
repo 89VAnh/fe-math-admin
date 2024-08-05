@@ -161,6 +161,7 @@ export default function UpdateModal<T>({
           labelPlacement='outside'
           type='file'
           accept='image/*'
+          defaultValue={item[formItem.key as keyof T] as string}
         />
       );
 

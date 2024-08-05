@@ -23,6 +23,9 @@ export async function deleteFetcher(url: string, { arg }: { arg: any }) {
 }
 
 export async function putFetcher(url: string, { arg }: { arg: any }) {
-  console.log(arg);
   return await apiClient.put(url, arg).then((res) => res.data);
+}
+
+export async function patchFetcher(url: string, { arg }: { arg: any }) {
+  return await apiClient.patch(url, arg).then((res) => res.data);
 }
