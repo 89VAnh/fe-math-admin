@@ -5,6 +5,7 @@ import {
   getFetcher,
   patchFetcher,
   postFetcher,
+  putFetcher,
 } from "../fetcher";
 const prefix = "account";
 
@@ -46,6 +47,12 @@ export function useChangePassword() {
     `${prefix}/change-password`,
     patchFetcher
   );
+
+  return { trigger, isMutating };
+}
+
+export function useUpdateAccount() {
+  const { trigger, isMutating } = useSWRMutation(prefix, putFetcher);
 
   return { trigger, isMutating };
 }

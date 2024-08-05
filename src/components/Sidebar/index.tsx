@@ -36,7 +36,7 @@ const menuGroups = [
     menuItems: [
       {
         icon: <DashboardIcon />,
-        label: "Dashboard",
+        label: "Thống kê",
         route: DASHBOARD_URL,
       },
       {
