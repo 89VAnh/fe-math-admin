@@ -6,7 +6,6 @@ import { Account } from "@/types/Account";
 import { Button, Image, Input, Spacer } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import ChangePwModal from "./ChangePwModal";
-// import ChangePwModal from "./ChangePwModal";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<Account>({} as Account);
