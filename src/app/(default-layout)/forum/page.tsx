@@ -6,7 +6,7 @@ export default function Page() {
     <>
       <div className='mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
         <h2 className='text-[26px] font-bold leading-[30px] text-dark dark:text-white'>
-          Danh sách cấp bậc (lớp)
+          Danh sách tin nhắn
         </h2>
       </div>
       <ChatTable />
