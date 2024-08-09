@@ -2,8 +2,8 @@ import { ApexOptions } from "apexcharts";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const ChartLevel = ({ levels }: { levels: any }) => {
-  const series = levels?.map((x: any) => x.total);
+const ChartResultLevel = ({ levels }: { levels: any }) => {
+  const series = levels?.map((x: any) => x.result_count);
 
   const options: ApexOptions = {
     chart: {
@@ -27,7 +27,7 @@ const ChartLevel = ({ levels }: { levels: any }) => {
             total: {
               show: true,
               showAlways: true,
-              label: "Bài thi",
+              label: "Lượt làm",
               fontSize: "16px",
               fontWeight: "400",
             },
@@ -68,7 +68,7 @@ const ChartLevel = ({ levels }: { levels: any }) => {
       <div className='mb-9 justify-between gap-4 sm:flex'>
         <div>
           <h4 className='text-body-2xlg font-bold text-dark dark:text-white'>
-            Tỷ lệ cấp bậc bài thi
+            Lượt làm bài theo cấp bậc
           </h4>
         </div>
         <div></div>
@@ -83,4 +83,4 @@ const ChartLevel = ({ levels }: { levels: any }) => {
   );
 };
 
-export default ChartLevel;
+export default ChartResultLevel;

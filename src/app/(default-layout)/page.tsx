@@ -1,5 +1,6 @@
 "use client";
 import ChartLevel from "@/components/Dashboard/ChartLevel";
+import ChartResultLevel from "@/components/Dashboard/ChartResultLevel";
 import ChartScore from "@/components/Dashboard/ChartScore";
 import Stats from "@/components/Dashboard/Stats";
 import { useGetDashboard } from "@/helper/data/dashboard.loader";
@@ -19,7 +20,12 @@ export default function Home() {
       <Spacer y={4} />
       <ChartScore resultPerMonth={data?.resultPerMonth} />
       <Spacer y={4} />
-      {data?.levels && <ChartLevel levels={data?.levels} />}
+      <div className='flex gap-4'>
+        {data?.levels && <ChartLevel levels={data?.levels} />}
+        {data?.resultPerLevel && (
+          <ChartResultLevel levels={data?.resultPerLevel} />
+        )}
+      </div>
     </>
   );
 }
