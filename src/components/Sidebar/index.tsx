@@ -15,6 +15,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import {
   ACCOUNT_URL,
   DASHBOARD_URL,
+  FORUM_URL,
   HISTORY_URL,
   LEVEL_URL,
   QUESTION_URL,
@@ -58,6 +59,11 @@ const menuGroups = [
         icon: <LevelIcon />,
         label: "Quản lý cấp bậc (Lớp)",
         route: LEVEL_URL,
+      },
+      {
+        icon: <LevelIcon />,
+        label: "Quản lý diễn đàn",
+        route: FORUM_URL,
       },
       {
         icon: <HistoryIcon />,
