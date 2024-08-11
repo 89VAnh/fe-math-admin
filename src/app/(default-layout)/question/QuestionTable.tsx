@@ -20,82 +20,37 @@ const columns = [
   {
     key: "content",
     label: "Nội dung",
-    render: ({ children }: { children: any }) => {
-      return (
-        <Latex>
-          {(children as string)
-            ? children.replace(
-                /<p>(.*?)<\/p>/g,
-                (_: any, p1: string) => `$${p1}$`
-              )
-            : ""}
-        </Latex>
-      );
-    },
+    render: ({ children }: { children: any }) => (
+      <Latex>{children as string}</Latex>
+    ),
   },
   {
     key: "answerA",
     label: "Đáp án A",
-    render: ({ children }: { children: any }) => {
-      return (
-        <Latex>
-          {(children as string)
-            ? children.replace(
-                /<p>(.*?)<\/p>/g,
-                (_: any, p1: string) => `$${p1}$`
-              )
-            : ""}
-        </Latex>
-      );
-    },
+    render: ({ children }: { children: any }) => (
+      <Latex>{children as string}</Latex>
+    ),
   },
   {
     key: "answerB",
     label: "Đáp án B",
-    render: ({ children }: { children: any }) => {
-      return (
-        <Latex>
-          {(children as string)
-            ? children.replace(
-                /<p>(.*?)<\/p>/g,
-                (_: any, p1: string) => `$${p1}$`
-              )
-            : ""}
-        </Latex>
-      );
-    },
+    render: ({ children }: { children: any }) => (
+      <Latex>{children as string}</Latex>
+    ),
   },
   {
     key: "answerC",
     label: "Đáp án C",
-    render: ({ children }: { children: any }) => {
-      return (
-        <Latex>
-          {(children as string)
-            ? children.replace(
-                /<p>(.*?)<\/p>/g,
-                (_: any, p1: string) => `$${p1}$`
-              )
-            : ""}
-        </Latex>
-      );
-    },
+    render: ({ children }: { children: any }) => (
+      <Latex>{children as string}</Latex>
+    ),
   },
   {
     key: "answerD",
     label: "Đáp án D",
-    render: ({ children }: { children: any }) => {
-      return (
-        <Latex>
-          {(children as string)
-            ? children.replace(
-                /<p>(.*?)<\/p>/g,
-                (_: any, p1: string) => `$${p1}$`
-              )
-            : ""}
-        </Latex>
-      );
-    },
+    render: ({ children }: { children: any }) => (
+      <Latex>{children as string}</Latex>
+    ),
   },
   {
     key: "correctAnswer",

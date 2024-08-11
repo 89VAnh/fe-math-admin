@@ -174,7 +174,7 @@ function Editor({
                       const insertPosition =
                         editorRef.current.editor?.model.document.selection.getFirstPosition();
                       // @ts-ignore
-                      writer.insertText(latex, insertPosition);
+                      writer.insertText(`$${latex}$`, insertPosition);
                     });
                   }}>
                   Ghi
